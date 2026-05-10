@@ -41,10 +41,11 @@ namespace ed0905_1
 
         private void UpdateProduct()
         {
-            NpgsqlCommand command = new NpgsqlCommand("UPDATE Client SET name = :name, ed = :ed WHERE id = :id", connection);
+            NpgsqlCommand command = new NpgsqlCommand("UPDATE Product SET name = :name, ed = :ed WHERE id = :id", connection);
             command.Parameters.AddWithValue("id", product.Id);
             command.Parameters.AddWithValue("name", textName.Text);
             command.Parameters.AddWithValue("ed", textEd.Text);
+            command.ExecuteNonQuery();
         }
 
         private void buttonOk_Click(object sender, EventArgs e)

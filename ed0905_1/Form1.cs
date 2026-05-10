@@ -108,5 +108,11 @@ namespace ed0905_1
         {
 
         }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            updateButton.Enabled = dataGridView1.SelectedRows.Count == 1;
+            deleteButton.Enabled = dataGridView1.SelectedRows.Count > 0;
+        }
     }
 }

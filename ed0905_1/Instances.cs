@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ed0905_1
 {
@@ -104,7 +105,7 @@ namespace ed0905_1
             this.OrderDate = DateTime.Parse(cells[2].ToString());
 
             string deliveryDateStr = cells[3].ToString();
-            this.DeliveryDate = deliveryDateStr != null 
+            this.DeliveryDate = deliveryDateStr != ""
                 ? DateTime.Parse(deliveryDateStr) : DateTime.MinValue;
 
             this.TotalSum = Convert.ToInt32(cells[4]);
