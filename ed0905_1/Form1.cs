@@ -106,6 +106,19 @@ namespace ed0905_1
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                {
+                    DataRowView rowView = row.DataBoundItem as DataRowView;
+                    adapter.DeleteByDataRow(connection, rowView.Row);
+                }
+                UpdateData();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 

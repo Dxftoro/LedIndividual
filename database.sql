@@ -74,9 +74,9 @@ CREATE OR REPLACE FUNCTION delete_order_info() RETURNS TRIGGER AS $del_oi_trigge
 	BEGIN
 		UPDATE Order_1
 		SET total_sum = total_sum - OLD.quantity * (
-			SELECT price FROM Price_List WHERE ID = NEW.id_price
+			SELECT price FROM Price_List WHERE ID = OLD.id_price
 		)
-		WHERE Order_1.id=OLD.id_order;
+		WHERE Order_1.id = OLD.id_order;
 		RETURN NULL;
 	END
 $del_oi_trigger$ LANGUAGE plpgsql;
