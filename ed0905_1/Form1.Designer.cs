@@ -43,10 +43,11 @@
             // 
             // clientGridButton
             // 
-            this.clientGridButton.Location = new System.Drawing.Point(12, 12);
+            this.clientGridButton.Location = new System.Drawing.Point(12, 49);
             this.clientGridButton.Name = "clientGridButton";
             this.clientGridButton.Size = new System.Drawing.Size(116, 31);
             this.clientGridButton.TabIndex = 0;
+            this.clientGridButton.TabStop = false;
             this.clientGridButton.Text = "Клиенты";
             this.clientGridButton.UseVisualStyleBackColor = true;
             this.clientGridButton.Click += new System.EventHandler(this.clientGridButton_Click);
@@ -61,7 +62,7 @@
             // 
             // productGridButton
             // 
-            this.productGridButton.Location = new System.Drawing.Point(12, 49);
+            this.productGridButton.Location = new System.Drawing.Point(12, 12);
             this.productGridButton.Name = "productGridButton";
             this.productGridButton.Size = new System.Drawing.Size(116, 31);
             this.productGridButton.TabIndex = 2;
@@ -98,6 +99,7 @@
             this.deleteButton.TabIndex = 5;
             this.deleteButton.Text = "Удалить";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // updateButton
             // 
@@ -107,6 +109,7 @@
             this.updateButton.TabIndex = 6;
             this.updateButton.Text = "Изменить";
             this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // insertButton
             // 
@@ -116,6 +119,7 @@
             this.insertButton.TabIndex = 7;
             this.insertButton.Text = "Добавить";
             this.insertButton.UseVisualStyleBackColor = true;
+            this.insertButton.Click += new System.EventHandler(this.insertButton_Click);
             // 
             // reportButton
             // 

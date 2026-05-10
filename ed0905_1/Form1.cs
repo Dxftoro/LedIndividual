@@ -26,7 +26,7 @@ namespace ed0905_1
             UpdateData();
         }
 
-		private void UpdateData()
+        private void UpdateData()
 		{
             adapter.Setup(connection, dataGridView1);
             this.Text = $"Склад (представление: {adapter.GetTableName()})";
@@ -34,7 +34,7 @@ namespace ed0905_1
 
         private Task Connect()
 		{
-            connection = new NpgsqlConnection("server=26.84.220.160;port=5432;userid=postgres;password=postpass;database=ed0905_1");
+            connection = new NpgsqlConnection("server=26.60.242.39;port=5432;userid=ftorozol;password=1488;database=ed0905_1");
 			
 			try
 			{
@@ -52,7 +52,6 @@ namespace ed0905_1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void clientGridButton_Click(object sender, EventArgs e)
@@ -86,6 +85,26 @@ namespace ed0905_1
         }
 
         private void reportButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void insertButton_Click(object sender, EventArgs e)
+        {
+            Form additionForm = adapter.CreateInstanceForm(connection, null);
+            DialogResult result = additionForm.ShowDialog();
+            if (result == DialogResult.OK) UpdateData();
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            Form additionForm = adapter.CreateInstanceForm(connection,
+                dataGridView1.SelectedRows.Count > 0 ? dataGridView1.SelectedRows[0] : null);
+            DialogResult result = additionForm.ShowDialog();
+            if (result == DialogResult.OK) UpdateData();
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
         {
 
         }
