@@ -54,9 +54,9 @@ namespace ed0905_1
         public abstract Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row);
     }
 
-    public class UserDataAdapter : TableDataAdapter
+    public class ClientDataAdapter : TableDataAdapter
     {
-        public UserDataAdapter() : base("Client")
+        public ClientDataAdapter() : base("Client")
         {
         }
 

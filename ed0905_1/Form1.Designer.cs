@@ -49,6 +49,7 @@
             this.clientGridButton.TabIndex = 0;
             this.clientGridButton.Text = "Клиенты";
             this.clientGridButton.UseVisualStyleBackColor = true;
+            this.clientGridButton.Click += new System.EventHandler(this.clientGridButton_Click);
             // 
             // dataGridView1
             // 
@@ -66,6 +67,7 @@
             this.productGridButton.TabIndex = 2;
             this.productGridButton.Text = "Товары";
             this.productGridButton.UseVisualStyleBackColor = true;
+            this.productGridButton.Click += new System.EventHandler(this.productGridButton_Click);
             // 
             // orderGridButton
             // 
@@ -75,6 +77,7 @@
             this.orderGridButton.TabIndex = 3;
             this.orderGridButton.Text = "Заказы";
             this.orderGridButton.UseVisualStyleBackColor = true;
+            this.orderGridButton.Click += new System.EventHandler(this.orderGridButton_Click);
             // 
             // orderDataGridButton
             // 
@@ -84,6 +87,7 @@
             this.orderDataGridButton.TabIndex = 4;
             this.orderDataGridButton.Text = "Данные заказов";
             this.orderDataGridButton.UseVisualStyleBackColor = true;
+            this.orderDataGridButton.Click += new System.EventHandler(this.orderDataGridButton_Click);
             // 
             // deleteButton
             // 
@@ -121,6 +125,7 @@
             this.reportButton.TabIndex = 8;
             this.reportButton.Text = "Отчёт";
             this.reportButton.UseVisualStyleBackColor = true;
+            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
             // 
             // buttonPriceListGrid
             // 
@@ -130,6 +135,7 @@
             this.buttonPriceListGrid.TabIndex = 9;
             this.buttonPriceListGrid.Text = "Прайс-лист";
             this.buttonPriceListGrid.UseVisualStyleBackColor = true;
+            this.buttonPriceListGrid.Click += new System.EventHandler(this.buttonPriceListGrid_Click);
             // 
             // Form1
             // 
@@ -148,6 +154,7 @@
             this.Controls.Add(this.clientGridButton);
             this.Name = "Form1";
             this.Text = "Склад";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
