@@ -33,7 +33,7 @@ namespace ed0905_1
 
         private void InsertClient()
         {
-            NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Client (name, address, phone) VALUES (:name, :address, :phone)", connection);
+            NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Client (fio, address, phone) VALUES (:fio, :address, :phone)", connection);
             command.Parameters.AddWithValue("fio", textFio.Text);
             command.Parameters.AddWithValue("address", textAddress.Text);
             command.Parameters.AddWithValue("phone", textPhone.Text);
@@ -42,7 +42,7 @@ namespace ed0905_1
 
         private void UpdateClient()
         {
-            NpgsqlCommand command = new NpgsqlCommand("UPDATE Client SET name = :name, address = :address, phone = :phone WHERE id = :id", connection);
+            NpgsqlCommand command = new NpgsqlCommand("UPDATE Client SET fio = :fio, address = :address, phone = :phone WHERE id = :id", connection);
             command.Parameters.AddWithValue("id", client.Id);
             command.Parameters.AddWithValue("fio", textFio.Text);
             command.Parameters.AddWithValue("address", textAddress.Text);
