@@ -164,4 +164,30 @@ namespace ed0905_1
         }
     }
 
+
+    public class PriceListDataAdapter : TableDataAdapter
+    {
+        public PriceListDataAdapter() : base("Price_List")
+        {
+        }
+
+        public override void OnSetup(NpgsqlDataAdapter adapter, NpgsqlConnection connection, DataGridView view)
+        {
+            view.DataSource = dataTable;
+            view.Columns[0].HeaderText = "ID";
+            view.Columns[1].HeaderText = "ID Product";
+            view.Columns[2].HeaderText = "Price";
+        }
+
+        public override Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row)
+        {
+            if (row == null) return new FormPrice(connection, null);
+
+            DataRowView rowView = row.DataBoundItem as DataRowView;
+            Price price = new Price(rowView.Row);
+
+            return new FormPrice(connection, price);
+        }
+    }
+
 }

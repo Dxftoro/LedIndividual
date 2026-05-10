@@ -46,6 +46,14 @@ namespace ed0905_1
             this.Value = price;
         }
 
+        public Price(DataRow row)
+        {
+            var cells = row.ItemArray;
+            this.Id = Convert.ToInt32(cells[0]);
+            this.IdProduct = Convert.ToInt32(cells[1]);
+            this.Value = Convert.ToInt32(cells[2]);
+        }
+
         public override string ToString()
         {
             return $"{Id}: Product ID = {IdProduct}, Price = {Value}";
