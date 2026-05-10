@@ -36,6 +36,7 @@
             this.dateTimeDelivr = new System.Windows.Forms.DateTimePicker();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
+            this.deliveredCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -82,6 +83,7 @@
             // 
             // dateTimeDelivr
             // 
+            this.dateTimeDelivr.Enabled = false;
             this.dateTimeDelivr.Location = new System.Drawing.Point(220, 63);
             this.dateTimeDelivr.Name = "dateTimeDelivr";
             this.dateTimeDelivr.Size = new System.Drawing.Size(198, 20);
@@ -105,6 +107,20 @@
             this.buttonOk.TabIndex = 10;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
+            // 
+            // deliveredCheckBox
+            // 
+            this.deliveredCheckBox.AutoSize = true;
+            this.deliveredCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.deliveredCheckBox.Location = new System.Drawing.Point(330, 47);
+            this.deliveredCheckBox.Name = "deliveredCheckBox";
+            this.deliveredCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.deliveredCheckBox.Size = new System.Drawing.Size(88, 17);
+            this.deliveredCheckBox.TabIndex = 12;
+            this.deliveredCheckBox.Text = "Доставлено";
+            this.deliveredCheckBox.UseVisualStyleBackColor = false;
+            this.deliveredCheckBox.CheckedChanged += new System.EventHandler(this.deliveredCheckBox_CheckedChanged);
             // 
             // FormOrder
             // 
@@ -121,8 +137,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dateTimeOrder);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.deliveredCheckBox);
             this.Name = "FormOrder";
             this.Text = "Заказ";
+            this.Load += new System.EventHandler(this.FormOrder_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,5 +156,6 @@
         private System.Windows.Forms.DateTimePicker dateTimeDelivr;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOk;
+        private System.Windows.Forms.CheckBox deliveredCheckBox;
     }
 }
