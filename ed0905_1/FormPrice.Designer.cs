@@ -93,6 +93,7 @@
             this.buttonOk.TabIndex = 14;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // FormPrice
             // 
@@ -109,6 +110,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormPrice";
             this.Text = "Цена товара";
+            this.Load += new System.EventHandler(this.FormPrice_Load);
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

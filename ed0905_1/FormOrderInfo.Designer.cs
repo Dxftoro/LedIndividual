@@ -112,6 +112,7 @@
             this.buttonOk.TabIndex = 12;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // FormOrderInfo
             // 
