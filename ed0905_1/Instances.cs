@@ -34,20 +34,21 @@ namespace ed0905_1
         }
     }
 
-    public class PriceList
+    public class Price
     {
         public int Id { get; set; }
         public int IdProduct { get; set; }
-        public int Price { get; set; }
+        public int Value { get; set; }
 
-        public PriceList(int idProduct, int price)
+        public Price(int idProduct, int price)
         {
             this.IdProduct = idProduct;
+            this.Value = price;
         }
 
         public override string ToString()
         {
-            return $"{Id}: Product ID = {IdProduct}, Price = {Price}";
+            return $"{Id}: Product ID = {IdProduct}, Price = {Value}";
         }
     }
 
