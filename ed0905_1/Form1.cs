@@ -22,6 +22,7 @@ namespace ed0905_1
 		{
 			InitializeComponent();
             this.adapter = new ProductDataAdapter();
+            Connect();
             UpdateData();
         }
 
@@ -40,9 +41,9 @@ namespace ed0905_1
 				connection.Open();
 				Debug.WriteLine("Connected successfuly!");
 			}
-			catch
+			catch (Exception exc)
 			{
-				MessageBox.Show("Can't connect to database!");
+				MessageBox.Show("Can't connect to database! " + exc.Message);
                 Close();
 			}
 
@@ -51,7 +52,7 @@ namespace ed0905_1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-			Connect();
+
         }
 
         private void clientGridButton_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace ed0905_1
             adapter = new ClientDataAdapter();
             UpdateData();
         }
-
+        
         private void productGridButton_Click(object sender, EventArgs e)
         {
             adapter = new ProductDataAdapter();
