@@ -10,13 +10,16 @@ CREATE TABLE public.Product (
 
 ALTER SEQUENCE public.product_id_seq OWNED BY public.Product.ID;
 
+CREATE SEQUENCE public.price_list_id_seq;
+
 CREATE TABLE public.Price_List (
-                ID INTEGER NOT NULL,
+                ID INTEGER NOT NULL DEFAULT nextval('public.price_list_id_seq'),
                 id_product INTEGER NOT NULL,
                 price INTEGER DEFAULT 0 NOT NULL,
                 CONSTRAINT pk_price_list PRIMARY KEY (ID)
 );
 
+ALTER SEQUENCE public.price_list_id_seq OWNED BY public.Price_List.ID;
 
 CREATE SEQUENCE public.client_id_seq;
 
@@ -31,8 +34,10 @@ CREATE TABLE public.Client (
 
 ALTER SEQUENCE public.client_id_seq OWNED BY public.Client.ID;
 
+CREATE SEQUENCE public.order_1_id_seq;
+
 CREATE TABLE public.Order_1 (
-                id INTEGER NOT NULL,
+                id INTEGER NOT NULL DEFAULT nextval('public.order_1_id_seq'),
                 id_client INTEGER NOT NULL,
                 order_date DATE NOT NULL,
                 delivery_date DATE,
@@ -40,14 +45,19 @@ CREATE TABLE public.Order_1 (
                 CONSTRAINT pk_order_1 PRIMARY KEY (id)
 );
 
+ALTER SEQUENCE public.order_1_id_seq OWNED BY public.Order_1.id;
+
+CREATE SEQUENCE public.order_info_id_seq;
 
 CREATE TABLE public.Order_Info (
-                ID INTEGER NOT NULL,
+                ID INTEGER NOT NULL DEFAULT nextval('public.order_info_id_seq'),
                 id_price INTEGER NOT NULL,
                 id_order INTEGER NOT NULL,
                 quantity INTEGER DEFAULT 0 NOT NULL,
                 CONSTRAINT pk_order_info PRIMARY KEY (ID)
 );
+
+ALTER SEQUENCE public.order_info_id_seq OWNED BY public.Order_Info.ID;
 
 CREATE OR REPLACE FUNCTION insert_order_info() RETURNS TRIGGER AS $ad_oi_trigger$
 	BEGIN
@@ -117,17 +127,17 @@ INSERT INTO public.Product (name, ed) VALUES
 ('Внешний HDD 1TB', 'шт'),
 ('Принтер лазерный', 'шт');
 
-INSERT INTO public.Price_List (ID, id_product, price) VALUES
-(1, 1, 3500),   -- Клавиатура механическая
-(2, 2, 1200),   -- Мышь оптическая
-(3, 3, 15000),  -- Монитор 24"
-(4, 4, 25000),  -- Системный блок
-(5, 5, 2800),   -- Наушники игровые
-(6, 6, 1800),   -- Веб-камера HD
-(7, 7, 350),    -- Коврик для мыши
-(8, 8, 800),    -- USB-флешка 64GB
-(9, 9, 4200),   -- Внешний HDD 1TB
-(10, 10, 12000); -- Принтер лазерный
+INSERT INTO public.Price_List (id_product, price) VALUES
+(1, 3500),   -- Клавиатура механическая
+(2, 1200),   -- Мышь оптическая
+(3, 15000),  -- Монитор 24"
+(4, 25000),  -- Системный блок
+(5, 2800),   -- Наушники игровые
+(6, 1800),   -- Веб-камера HD
+(7, 350),    -- Коврик для мыши
+(8, 800),    -- USB-флешка 64GB
+(9, 4200),   -- Внешний HDD 1TB
+(10, 12000); -- Принтер лазерный
 
 INSERT INTO public.Client (fio, phone, address) VALUES
 ('Иванов Иван Иванович', '+79123456789', 'г. Москва, ул. Ленина, д. 10, кв. 15'),
@@ -141,45 +151,45 @@ INSERT INTO public.Client (fio, phone, address) VALUES
 ('Федоров Андрей Николаевич', '+79901234567', 'г. Ростов-на-Дону, ул. Пушкинская, д. 3, кв. 18'),
 ('Николаева Мария Павловна', '+79012345678', 'г. Уфа, ул. Цюрупы, д. 22, кв. 45');
 
-INSERT INTO public.Order_1 (id, id_client, order_date, delivery_date, total_sum) VALUES
-(1001, 1, '2025-01-15', '2025-01-20', 4700),   -- Иванов: клавиатура + мышь
-(1002, 2, '2025-01-20', '2025-01-25', 15000),  -- Петрова: монитор
-(1003, 3, '2025-02-01', '2025-02-05', 27800),  -- Сидоров: системный блок + наушники
-(1004, 4, '2025-02-10', '2025-02-15', 350),    -- Козлова: коврик
-(1005, 5, '2025-02-18', NULL, 5900),            -- Морозов: веб-камера + флешка (доставка ещё не выполнена)
-(1006, 1, '2025-03-01', '2025-03-06', 4200),   -- Иванов: внешний HDD
-(1007, 6, '2025-03-10', '2025-03-15', 37000),  -- Волкова: системный блок + монитор
-(1008, 7, '2025-03-15', '2025-03-20', 2800),   -- Соколов: наушники
-(1009, 8, '2025-03-20', NULL, 12000),          -- Михайлова: принтер (ждёт доставку)
-(1010, 9, '2025-03-25', '2025-03-30', 4700),   -- Федоров: клавиатура + мышь
-(1011, 10, '2025-04-01', '2025-04-05', 3500),  -- Николаева: клавиатура
-(1012, 3, '2025-04-05', '2025-04-10', 800),    -- Сидоров: флешка
-(1013, 5, '2025-04-08', NULL, 25000),          -- Морозов: системный блок (ждёт)
-(1014, 2, '2025-04-10', '2025-04-15', 1800),   -- Петрова: веб-камера
-(1015, 6, '2025-04-12', '2025-04-17', 1200);   -- Волкова: мышь
+INSERT INTO public.Order_1 (id_client, order_date, delivery_date, total_sum) VALUES
+(1, '2025-01-15', '2025-01-20', 4700),   -- Иванов: клавиатура + мышь
+(2, '2025-01-20', '2025-01-25', 15000),  -- Петрова: монитор
+(3, '2025-02-01', '2025-02-05', 27800),  -- Сидоров: системный блок + наушники
+(4, '2025-02-10', '2025-02-15', 350),    -- Козлова: коврик
+(5, '2025-02-18', NULL, 5900),            -- Морозов: веб-камера + флешка (доставка ещё не выполнена)
+(1, '2025-03-01', '2025-03-06', 4200),   -- Иванов: внешний HDD
+(6, '2025-03-10', '2025-03-15', 37000),  -- Волкова: системный блок + монитор
+(7, '2025-03-15', '2025-03-20', 2800),   -- Соколов: наушники
+(8, '2025-03-20', NULL, 12000),          -- Михайлова: принтер (ждёт доставку)
+(9, '2025-03-25', '2025-03-30', 4700),   -- Федоров: клавиатура + мышь
+(10, '2025-04-01', '2025-04-05', 3500),  -- Николаева: клавиатура
+(3, '2025-04-05', '2025-04-10', 800),    -- Сидоров: флешка
+(5, '2025-04-08', NULL, 25000),          -- Морозов: системный блок (ждёт)
+(2, '2025-04-10', '2025-04-15', 1800),   -- Петрова: веб-камера
+(6, '2025-04-12', '2025-04-17', 1200);   -- Волкова: мышь
 
-INSERT INTO public.Order_Info (ID, id_price, id_order, quantity) VALUES
+INSERT INTO public.Order_Info (id_price, id_order, quantity) VALUES
 
-(1, 1, 1001, 1), 
-(2, 2, 1001, 1),  
-(3, 3, 1002, 1), 
-(4, 4, 1003, 1),
-(5, 5, 1003, 1),
-(6, 7, 1004, 2),
-(7, 6, 1005, 1),
-(8, 8, 1005, 2), 
-(9, 9, 1006, 1),
-(10, 4, 1007, 1),
-(11, 3, 1007, 1),
-(12, 5, 1008, 2),
-(13, 10, 1009, 1),
-(14, 1, 1010, 1),
-(15, 2, 1010, 1),
-(16, 1, 1011, 1),
-(17, 8, 1012, 1),
-(18, 4, 1013, 1),
-(19, 6, 1014, 1),
-(20, 2, 1015, 1);
+(1, 1001, 1), 
+(2, 1001, 1),  
+(3, 1002, 1), 
+(4, 1003, 1),
+(5, 1003, 1),
+(7, 1004, 2),
+(6, 1005, 1),
+(8, 1005, 2), 
+(9, 1006, 1),
+(4, 1007, 1),
+(3, 1007, 1),
+(5, 1008, 2),
+(10, 1009, 1),
+(1, 1010, 1),
+(2, 1010, 1),
+(1, 1011, 1),
+(8, 1012, 1),
+(4, 1013, 1),
+(6, 1014, 1),
+(2, 1015, 1);
 
 SELECT 'Product' AS table_name, COUNT(*) FROM public.Product
 UNION ALL

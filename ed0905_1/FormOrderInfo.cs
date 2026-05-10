@@ -46,7 +46,7 @@ namespace ed0905_1
 
         private void LoadFuturas()
         {
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Order", connection);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Order_1", connection);
             System.Data.DataSet dataSet = new System.Data.DataSet();
             adapter.Fill(dataSet);
 
@@ -97,7 +97,7 @@ namespace ed0905_1
 
         private void InsertFuturaInfo(Price price, Order order)
         {
-            NpgsqlCommand command = new NpgsqlCommand("INSERT INTO FuturaInfo (id_price, id_order, quantity) VALUES (:id_price, :id_order, :quantity)", connection);
+            NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_Info (id_price, id_order, quantity) VALUES (:id_price, :id_order, :quantity)", connection);
             command.Parameters.AddWithValue("id_price", price.Id);
             command.Parameters.AddWithValue("id_order", order.Id);
             command.Parameters.AddWithValue("quantity", countBox.Value);
@@ -106,7 +106,7 @@ namespace ed0905_1
 
         private void UpdateFuturaInfo(Price price, Order order)
         {
-            NpgsqlCommand command = new NpgsqlCommand("UPDATE FuturaInfo SET id_price = :id_price, id_order = :id_order, quantity = :quantity WHERE id = :id", connection);
+            NpgsqlCommand command = new NpgsqlCommand("UPDATE Order_Info SET id_price = :id_price, id_order = :id_order, quantity = :quantity WHERE id = :id", connection);
             command.Parameters.AddWithValue("id", orderInfo.Id);
             command.Parameters.AddWithValue("id_price", price.Id);
             command.Parameters.AddWithValue("id_order", order.Id);

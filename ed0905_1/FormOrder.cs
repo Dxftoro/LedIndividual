@@ -72,7 +72,7 @@ namespace ed0905_1
 
         private void InsertOrder(Client client)
 		{
-			NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order (id_client, order_date, delivery_date) VALUES (:id_client, :order_date, :delivery_date)", connection);
+			NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_1 (id_client, order_date, delivery_date) VALUES (:id_client, :order_date, :delivery_date)", connection);
 			command.Parameters.AddWithValue("id_client", client.Id);
 			command.Parameters.AddWithValue("order_date", dateTimeOrder.Value);
 
@@ -90,7 +90,7 @@ namespace ed0905_1
 
 		private void UpdateOrder(Client client)
 		{
-			NpgsqlCommand command = new NpgsqlCommand("UPDATE Order SET id_client = :id_client, order_date = :order_date, delivery_date = :delivery_date WHERE id = :id", connection);
+			NpgsqlCommand command = new NpgsqlCommand("UPDATE Order_1 SET id_client = :id_client, order_date = :order_date, delivery_date = :delivery_date WHERE id = :id", connection);
 			command.Parameters.AddWithValue("id", order.Id);
 			command.Parameters.AddWithValue("id_client", client.Id);
 			command.Parameters.AddWithValue("order_date", dateTimeOrder.Value);
