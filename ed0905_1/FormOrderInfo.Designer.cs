@@ -130,6 +130,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormOrderInfo";
             this.Text = "Данные заказа";
+            this.Load += new System.EventHandler(this.FormOrderInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.countBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
