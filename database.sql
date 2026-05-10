@@ -49,32 +49,32 @@ CREATE TABLE public.Order_Info (
                 CONSTRAINT pk_order_info PRIMARY KEY (ID)
 );
 
-CREATE OR REPLACE FUNCTION insert_order_info()
-RETURNS TRIGGER AS $$
-BEGIN
-    UPDATE Order_1
-    SET total_sum = total_sum + NEW.quantity * (
-        SELECT price FROM Price_List WHERE ID = NEW.id_price
-    )
-    WHERE id = NEW.id_order;
-END;
-$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION insert_order_info() RETURNS TRIGGER AS $ad_oi_trigger$
+	BEGIN
+		UPDATE Order_1
+		SET total_sum = total_sum + NEW.quantity * (
+			SELECT price FROM Price_List WHERE ID = NEW.id_price
+		)
+		WHERE Order_1.id = NEW.id_order;
+		RETURN NULL;
+	END
+$ad_oi_trigger$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION delete_order_info()
-RETURNS TRIGGER AS $$
-BEGIN
-    UPDATE Order_1
-    SET total_sum = total_sum - OLD.quantity * (
-        SELECT price FROM Price_List WHERE ID = OLD.id_price
-    )
-    WHERE id = OLD.id_order;
-END;
-$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION delete_order_info() RETURNS TRIGGER AS $del_oi_trigger$
+	BEGIN
+		UPDATE Order_1
+		SET total_sum = total_sum - OLD.quantity * (
+			SELECT price FROM Price_List WHERE ID = NEW.id_price
+		)
+		WHERE Order_1.id=OLD.id_order;
+		RETURN NULL;
+	END
+$del_oi_trigger$ LANGUAGE plpgsql;
 
-CREATE TRIGGER ins_futura_info AFTER INSERT ON Order_Info
+CREATE TRIGGER ins_order_info AFTER INSERT ON Order_Info
 	FOR EACH ROW EXECUTE PROCEDURE insert_order_info();
 
-CREATE TRIGGER del_futura_info AFTER DELETE ON Order_Info
+CREATE TRIGGER del_order_info AFTER DELETE ON Order_Info
 	FOR EACH ROW EXECUTE PROCEDURE delete_order_info();
 
 ALTER TABLE public.Price_List ADD CONSTRAINT product_price_list_fk

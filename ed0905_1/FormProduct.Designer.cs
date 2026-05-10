@@ -86,6 +86,7 @@
             this.buttonOk.TabIndex = 8;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // FormProduct
             // 
@@ -102,6 +103,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormProduct";
             this.Text = "Товар";
+            this.Load += new System.EventHandler(this.FormProduct_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

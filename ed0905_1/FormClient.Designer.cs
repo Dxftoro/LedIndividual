@@ -94,6 +94,7 @@
             this.buttonOk.TabIndex = 6;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // buttonCancel
             // 
@@ -122,6 +123,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormClient";
             this.Text = "Клиент";
+            this.Load += new System.EventHandler(this.FormClient_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
