@@ -196,9 +196,9 @@ namespace ed0905_1
         {
             string query = @"
 select
-	Price_List.id,
-	Product.name,
-	Price_list.price
+	Price_List.id as №,
+	Product.name as Название,
+	Price_list.price as Цена
 from Price_List
 left join Product
 	on Price_List.id = Product.id";

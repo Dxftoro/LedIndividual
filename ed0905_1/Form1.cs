@@ -88,32 +88,52 @@ namespace ed0905_1
 
 		private void reportButton_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.ShowDialog();
-			string filename = dialog.FileName;
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            string filename = dialog.FileName;
 
-			Excel.Application excelObj = new Excel.Application();
-			excelObj.Visible = true;
+            Excel.Application excelObj = new Excel.Application();
+            excelObj.Visible = false;
 
-			Excel.Workbook workbook = excelObj.Workbooks.Open(filename, 0, false, 5, "", "", false,
-                Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+            Excel.Workbook workbook = null;
 
-			Worksheet worksheet = workbook.Sheets[1];
+            try
+            {
+                workbook = excelObj.Workbooks.Open(filename, 0, false, 5, "", "", false,
+                    Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
 
-			PriceListExportView view = new PriceListExportView();
-			view.Setup(connection);
-			System.Data.DataTable table = view.GetDataTable();
+                excelObj.Visible = true;
 
-            for (int i = 0; i < table.Columns.Count; i++)
-                worksheet.Cells[1, i + 1] = table.Columns[i].ColumnName;
+                Excel.Worksheet worksheet = workbook.Sheets[1];
 
-            for (int i = 0; i < table.Rows.Count; i++)
-                for (int j = 0; j < table.Columns.Count; j++)
-                    worksheet.Cells[i + 2, j + 1] = table.Rows[i][j].ToString();
+                PriceListExportView view = new PriceListExportView();
+                view.Setup(connection);
+                System.Data.DataTable table = view.GetDataTable();
 
-            workbook.Save();
-			workbook.Close();
-		}
+                for (int i = 0; i < table.Columns.Count; i++)
+                    worksheet.Cells[1, i + 1] = table.Columns[i].ColumnName;
+
+                for (int i = 0; i < table.Rows.Count; i++)
+                    for (int j = 0; j < table.Columns.Count; j++)
+                        worksheet.Cells[i + 2, j + 1] = table.Rows[i][j].ToString();
+
+                workbook.Save();
+                workbook.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                if (excelObj != null)
+                {
+                    excelObj.Quit();
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelObj);
+                }
+            }
+        }
 
 		private void insertButton_Click(object sender, EventArgs e)
 		{
