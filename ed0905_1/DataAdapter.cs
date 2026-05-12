@@ -237,15 +237,13 @@ left join Product
         {
             string query = @"
 select 
-	order_1.id,
-	client.fio,
-	order_1.order_date,
-	order_1.total_sum
+	id,
+	order_date,
+	total_sum
 from Order_1
-left join Client
-	on order_1.id_client = :id_client
-where 
-    order_date <= :order_date
+where
+    order_1.id_client = :id_client
+    and order_date <= :order_date
 	and delivery_date is null";
 
             NpgsqlCommand command = new NpgsqlCommand(query, connection);

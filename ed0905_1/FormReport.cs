@@ -63,6 +63,11 @@ namespace ed0905_1
             }
         }
 
+        public void UpdateChart(System.Data.DataTable table)
+        {
+
+        }
+
         private void FormReport_Load(object sender, EventArgs e)
         {
             LoadClients();

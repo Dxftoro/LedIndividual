@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.clientsBox = new System.Windows.Forms.ComboBox();
@@ -91,6 +91,7 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.buttonFetch);
             this.panel1.Controls.Add(this.clientsBox);
@@ -103,6 +104,7 @@
             // 
             // panel2
             // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.reportChart);
             this.panel2.Controls.Add(this.reportGrid);
             this.panel2.Location = new System.Drawing.Point(12, 51);
@@ -122,17 +124,20 @@
             // 
             chartArea3.Name = "ChartArea1";
             this.reportChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.reportChart.Legends.Add(legend3);
             this.reportChart.Location = new System.Drawing.Point(414, 3);
             this.reportChart.Name = "reportChart";
             series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
+            series3.IsValueShownAsLabel = true;
+            series3.Name = "Суммы недоставленных заказов";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             this.reportChart.Series.Add(series3);
             this.reportChart.Size = new System.Drawing.Size(535, 429);
             this.reportChart.TabIndex = 1;
-            this.reportChart.Text = "chart1";
+            this.reportChart.Text = "Суммы недоставленных заказов";
+            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            title3.Name = "Title1";
+            title3.Text = "Суммы недоставленных заказов";
+            this.reportChart.Titles.Add(title3);
             // 
             // FormReport
             // 
