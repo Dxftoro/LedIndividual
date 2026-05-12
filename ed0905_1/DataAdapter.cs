@@ -189,5 +189,29 @@ namespace ed0905_1
             return new FormPrice(connection, price);
         }
     }
+    public class PriceListExportView : BaseDataAdapter
+    {
+
+        public override void Setup(NpgsqlConnection connection, DataGridView view = null)
+        {
+            string query = @"
+select
+	Price_List.id,
+	Product.name,
+	Price_list.price
+from Price_List
+left join Product
+	on Price_List.id = Product.id";
+
+            NpgsqlCommand command = new NpgsqlCommand(query, connection);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
+            dataSet.Reset();
+            adapter.Fill(dataSet);
+            dataTable = dataSet.Tables[0];
+        }
+
+        public System.Data.DataTable GetDataTable() { return dataTable; }
+
+    }
 
 }
