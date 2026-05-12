@@ -65,7 +65,15 @@ namespace ed0905_1
 
         public void UpdateChart(System.Data.DataTable table)
         {
+            reportChart.Series[0].Points.Clear();
 
+            foreach (DataRow row in table.Rows)
+            {
+                var cells = row.ItemArray;
+                DateTime date = DateTime.Parse(cells[1].ToString());
+                int totalSum = Convert.ToInt32(cells[2]);
+                reportChart.Series[0].Points.AddXY(date, totalSum);
+            }
         }
 
         private void FormReport_Load(object sender, EventArgs e)
@@ -78,6 +86,7 @@ namespace ed0905_1
             Client client = GetSelectedClient();
             if (client == null) { MessageBox.Show("Client is not selected!"); Close(); }
             UpdateDataGrid(client.Id, dateTimeBorder.Value);
+            UpdateChart(adapter.GetDataTable());
         }
     }
 }
