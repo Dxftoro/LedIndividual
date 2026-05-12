@@ -38,6 +38,7 @@
             this.insertButton = new System.Windows.Forms.Button();
             this.reportButton = new System.Windows.Forms.Button();
             this.buttonPriceListGrid = new System.Windows.Forms.Button();
+            this.buttonPriceListExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,7 +125,7 @@
             // 
             // reportButton
             // 
-            this.reportButton.Location = new System.Drawing.Point(12, 197);
+            this.reportButton.Location = new System.Drawing.Point(12, 234);
             this.reportButton.Name = "reportButton";
             this.reportButton.Size = new System.Drawing.Size(116, 31);
             this.reportButton.TabIndex = 8;
@@ -142,11 +143,22 @@
             this.buttonPriceListGrid.UseVisualStyleBackColor = true;
             this.buttonPriceListGrid.Click += new System.EventHandler(this.buttonPriceListGrid_Click);
             // 
+            // buttonPriceListExcel
+            // 
+            this.buttonPriceListExcel.Location = new System.Drawing.Point(12, 197);
+            this.buttonPriceListExcel.Name = "buttonPriceListExcel";
+            this.buttonPriceListExcel.Size = new System.Drawing.Size(116, 31);
+            this.buttonPriceListExcel.TabIndex = 10;
+            this.buttonPriceListExcel.Text = "Прайс-лист (Excel)";
+            this.buttonPriceListExcel.UseVisualStyleBackColor = true;
+            this.buttonPriceListExcel.Click += new System.EventHandler(this.buttonPriceListExcel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonPriceListExcel);
             this.Controls.Add(this.buttonPriceListGrid);
             this.Controls.Add(this.reportButton);
             this.Controls.Add(this.insertButton);
@@ -177,6 +189,7 @@
         private System.Windows.Forms.Button insertButton;
         private System.Windows.Forms.Button reportButton;
         private System.Windows.Forms.Button buttonPriceListGrid;
+        private System.Windows.Forms.Button buttonPriceListExcel;
     }
 }
 

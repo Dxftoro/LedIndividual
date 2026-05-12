@@ -22,6 +22,8 @@ namespace ed0905_1
         }
 
         public abstract void Setup(NpgsqlConnection connection, DataGridView view);
+
+        public string GetTableName() { return tableName; }
     }
 
     public abstract class TableDataAdapter : BaseDataAdapter
@@ -30,8 +32,6 @@ namespace ed0905_1
         {
             this.tableName = tableName;
         }
-
-        public string GetTableName() { return tableName; }
 
         public override void Setup(NpgsqlConnection connection, DataGridView view)
         {
@@ -191,6 +191,11 @@ namespace ed0905_1
     }
     public class PriceListExportView : BaseDataAdapter
     {
+
+        public PriceListExportView()
+        {
+            this.tableName = "Прайс-лист";
+        }
 
         public override void Setup(NpgsqlConnection connection, DataGridView view = null)
         {

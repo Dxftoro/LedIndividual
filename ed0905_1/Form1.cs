@@ -86,55 +86,6 @@ namespace ed0905_1
 			UpdateData();
 		}
 
-		private void reportButton_Click(object sender, EventArgs e)
-		{
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() != DialogResult.OK) return;
-            string filename = dialog.FileName;
-
-            Excel.Application excelObj = new Excel.Application();
-            excelObj.Visible = false;
-
-            Excel.Workbook workbook = null;
-
-            try
-            {
-                workbook = excelObj.Workbooks.Open(filename, 0, false, 5, "", "", false,
-                    Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-
-                excelObj.Visible = true;
-
-                Excel.Worksheet worksheet = workbook.Sheets[1];
-
-                PriceListExportView view = new PriceListExportView();
-                view.Setup(connection);
-                System.Data.DataTable table = view.GetDataTable();
-
-                for (int i = 0; i < table.Columns.Count; i++)
-                    worksheet.Cells[1, i + 1] = table.Columns[i].ColumnName;
-
-                for (int i = 0; i < table.Rows.Count; i++)
-                    for (int j = 0; j < table.Columns.Count; j++)
-                        worksheet.Cells[i + 2, j + 1] = table.Rows[i][j].ToString();
-
-                workbook.Save();
-                workbook.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-            finally
-            {
-                if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-                if (excelObj != null)
-                {
-                    excelObj.Quit();
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelObj);
-                }
-            }
-        }
-
 		private void insertButton_Click(object sender, EventArgs e)
 		{
 			Form additionForm = adapter.CreateInstanceForm(connection, null);
@@ -173,5 +124,66 @@ namespace ed0905_1
 			updateButton.Enabled = dataGridView1.SelectedRows.Count == 1;
 			deleteButton.Enabled = dataGridView1.SelectedRows.Count > 0;
 		}
-	}
+
+        private void reportButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPriceListExcel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            string filename = dialog.FileName;
+
+            Excel.Application excelObj = new Excel.Application();
+            excelObj.Visible = false;
+
+            Excel.Workbook workbook = null;
+
+            try
+            {
+                workbook = excelObj.Workbooks.Open(filename, 0, false, 5, "", "", false,
+                    Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+
+                excelObj.Visible = true;
+
+                Excel.Worksheet worksheet = workbook.Sheets[1];
+                Range range = worksheet.Range["a1:c1"];
+                range.Merge();
+                range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                range.Interior.Color = Color.LightGray;
+
+                PriceListExportView view = new PriceListExportView();
+                view.Setup(connection);
+
+                range.Value = view.GetTableName();
+                System.Data.DataTable table = view.GetDataTable();
+
+                for (int i = 0; i < table.Columns.Count; i++)
+                    worksheet.Cells[2, i + 1] = table.Columns[i].ColumnName;
+
+                for (int i = 0; i < table.Rows.Count; i++)
+                    for (int j = 0; j < table.Columns.Count; j++)
+                        worksheet.Cells[i + 3, j + 1] = table.Rows[i][j].ToString();
+
+                worksheet.Columns.AutoFit();
+                workbook.Save();
+                workbook.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                if (excelObj != null)
+                {
+                    excelObj.Quit();
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelObj);
+                }
+            }
+        }
+    }
 }

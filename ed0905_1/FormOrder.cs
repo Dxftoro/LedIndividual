@@ -66,7 +66,7 @@ namespace ed0905_1
 
             if (order == null) return;
             dateTimeOrder.Value = order.OrderDate;
-            dateTimeDelivr.Value = order.DeliveryDate ?? DateTime.MinValue;
+			dateTimeDelivr.Value = order.DeliveryDate ?? dateTimeDelivr.MinDate;
 			deliveredCheckBox.Checked = order.DeliveryDate.HasValue;
         }
 

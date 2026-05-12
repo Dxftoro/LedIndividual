@@ -104,9 +104,8 @@ namespace ed0905_1
             this.IdClient = Convert.ToInt32(cells[1]);
             this.OrderDate = DateTime.Parse(cells[2].ToString());
 
-            string deliveryDateStr = cells[3].ToString();
-            this.DeliveryDate = deliveryDateStr != ""
-                ? DateTime.Parse(deliveryDateStr) : DateTime.MinValue;
+            this.DeliveryDate = cells[3] != DBNull.Value
+                ? DateTime.Parse(cells[3].ToString()) : (DateTime?)null;
 
             this.TotalSum = Convert.ToInt32(cells[4]);
         }
