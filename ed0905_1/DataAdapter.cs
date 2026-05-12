@@ -24,6 +24,25 @@ namespace ed0905_1
         public abstract void Setup(NpgsqlConnection connection, DataGridView view);
 
         public string GetTableName() { return tableName; }
+        public System.Data.DataTable GetDataTable() { return dataTable; }
+
+        protected NpgsqlDataAdapter FillBy(string query, NpgsqlConnection connection)
+        {
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(query, connection);
+            dataSet.Reset();
+            adapter.Fill(dataSet);
+            dataTable = dataSet.Tables[0];
+            return adapter;
+        }
+
+        protected NpgsqlDataAdapter FillBy(NpgsqlCommand command)
+        {
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
+            dataSet.Reset();
+            adapter.Fill(dataSet);
+            dataTable = dataSet.Tables[0];
+            return adapter;
+        }
     }
 
     public abstract class TableDataAdapter : BaseDataAdapter
@@ -35,11 +54,7 @@ namespace ed0905_1
 
         public override void Setup(NpgsqlConnection connection, DataGridView view)
         {
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM " + tableName, connection);
-            dataSet.Reset();
-            adapter.Fill(dataSet);
-            dataTable = dataSet.Tables[0];
-
+            NpgsqlDataAdapter adapter = FillBy($"SELECT * FROM {tableName}", connection);
             OnSetup(adapter, connection, view);
         }
 
@@ -208,14 +223,38 @@ from Price_List
 left join Product
 	on Price_List.id = Product.id";
 
-            NpgsqlCommand command = new NpgsqlCommand(query, connection);
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
-            dataSet.Reset();
-            adapter.Fill(dataSet);
-            dataTable = dataSet.Tables[0];
+            FillBy(query, connection);
         }
 
-        public System.Data.DataTable GetDataTable() { return dataTable; }
+    }
+
+    public class ClientReportView : BaseDataAdapter
+    {
+        public int IdClient { get; set; }
+        public DateTime OrderDate { get; set; }
+
+        public override void Setup(NpgsqlConnection connection, DataGridView view)
+        {
+            string query = @"
+select 
+	order_1.id,
+	client.fio,
+	order_1.order_date,
+	order_1.total_sum
+from Order_1
+left join Client
+	on order_1.id_client = :id_client
+where 
+    order_date <= :order_date
+	and delivery_date is null";
+
+            NpgsqlCommand command = new NpgsqlCommand(query, connection);
+            command.Parameters.AddWithValue("id_client", IdClient);
+            command.Parameters.AddWithValue("order_date", OrderDate);
+
+            FillBy(command);
+            view.DataSource = dataTable;
+        }
 
     }
 

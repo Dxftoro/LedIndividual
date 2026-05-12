@@ -125,7 +125,7 @@
             // 
             // reportButton
             // 
-            this.reportButton.Location = new System.Drawing.Point(12, 234);
+            this.reportButton.Location = new System.Drawing.Point(12, 273);
             this.reportButton.Name = "reportButton";
             this.reportButton.Size = new System.Drawing.Size(116, 31);
             this.reportButton.TabIndex = 8;
@@ -145,7 +145,7 @@
             // 
             // buttonPriceListExcel
             // 
-            this.buttonPriceListExcel.Location = new System.Drawing.Point(12, 197);
+            this.buttonPriceListExcel.Location = new System.Drawing.Point(12, 236);
             this.buttonPriceListExcel.Name = "buttonPriceListExcel";
             this.buttonPriceListExcel.Size = new System.Drawing.Size(116, 31);
             this.buttonPriceListExcel.TabIndex = 10;

@@ -76,9 +76,9 @@
             // clientsBox
             // 
             this.clientsBox.FormattingEnabled = true;
-            this.clientsBox.Location = new System.Drawing.Point(101, 12);
+            this.clientsBox.Location = new System.Drawing.Point(61, 12);
             this.clientsBox.Name = "clientsBox";
-            this.clientsBox.Size = new System.Drawing.Size(317, 21);
+            this.clientsBox.Size = new System.Drawing.Size(357, 21);
             this.clientsBox.TabIndex = 5;
             // 
             // dateTimeDelivr
