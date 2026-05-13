@@ -57,7 +57,7 @@ namespace ed0905_1
             if (initializing == true) return;
             orderChanged = changed;
             buttonOk.Enabled = changed;
-            MessageBox.Show($"CHANGED: {changed}");
+            //MessageBox.Show($"CHANGED: {changed}");
         }
 
         private void UpdateData()

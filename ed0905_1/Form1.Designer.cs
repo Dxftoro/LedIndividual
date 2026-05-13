@@ -32,7 +32,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.productGridButton = new System.Windows.Forms.Button();
             this.orderGridButton = new System.Windows.Forms.Button();
-            this.orderDataGridButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.insertButton = new System.Windows.Forms.Button();
@@ -82,16 +81,6 @@
             this.orderGridButton.UseVisualStyleBackColor = true;
             this.orderGridButton.Click += new System.EventHandler(this.orderGridButton_Click);
             // 
-            // orderDataGridButton
-            // 
-            this.orderDataGridButton.Location = new System.Drawing.Point(12, 123);
-            this.orderDataGridButton.Name = "orderDataGridButton";
-            this.orderDataGridButton.Size = new System.Drawing.Size(116, 31);
-            this.orderDataGridButton.TabIndex = 4;
-            this.orderDataGridButton.Text = "Данные заказов";
-            this.orderDataGridButton.UseVisualStyleBackColor = true;
-            this.orderDataGridButton.Click += new System.EventHandler(this.orderDataGridButton_Click);
-            // 
             // deleteButton
             // 
             this.deleteButton.ForeColor = System.Drawing.Color.Red;
@@ -125,7 +114,7 @@
             // 
             // reportButton
             // 
-            this.reportButton.Location = new System.Drawing.Point(12, 273);
+            this.reportButton.Location = new System.Drawing.Point(12, 256);
             this.reportButton.Name = "reportButton";
             this.reportButton.Size = new System.Drawing.Size(116, 31);
             this.reportButton.TabIndex = 8;
@@ -135,7 +124,7 @@
             // 
             // buttonPriceListGrid
             // 
-            this.buttonPriceListGrid.Location = new System.Drawing.Point(12, 160);
+            this.buttonPriceListGrid.Location = new System.Drawing.Point(12, 123);
             this.buttonPriceListGrid.Name = "buttonPriceListGrid";
             this.buttonPriceListGrid.Size = new System.Drawing.Size(116, 31);
             this.buttonPriceListGrid.TabIndex = 9;
@@ -145,7 +134,7 @@
             // 
             // buttonPriceListExcel
             // 
-            this.buttonPriceListExcel.Location = new System.Drawing.Point(12, 236);
+            this.buttonPriceListExcel.Location = new System.Drawing.Point(12, 219);
             this.buttonPriceListExcel.Name = "buttonPriceListExcel";
             this.buttonPriceListExcel.Size = new System.Drawing.Size(116, 31);
             this.buttonPriceListExcel.TabIndex = 10;
@@ -164,7 +153,6 @@
             this.Controls.Add(this.insertButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.deleteButton);
-            this.Controls.Add(this.orderDataGridButton);
             this.Controls.Add(this.orderGridButton);
             this.Controls.Add(this.productGridButton);
             this.Controls.Add(this.dataGridView1);
@@ -183,7 +171,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button productGridButton;
         private System.Windows.Forms.Button orderGridButton;
-        private System.Windows.Forms.Button orderDataGridButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button insertButton;
