@@ -115,6 +115,45 @@ ON DELETE CASCADE
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+-- Named order table view
+create view Named_Order as
+select
+	order_1.id,
+	client.fio,
+	order_1.order_date,
+	order_1.delivery_date,
+	order_1.total_sum
+from order_1
+left join Client
+on order_1.id_client = client.id;
+
+-- Named order info table view
+create view Named_Order_Info as
+select
+	info.id,
+	prod.name,
+	plist.price,
+	client.fio,
+	info.quantity
+from Order_Info as info
+left join Price_List as plist
+on info.id_price = plist.id
+left join Product as prod
+on plist.id_product = prod.id
+left join Order_1 as ord
+on info.id_order = ord.id
+left join Client
+on ord.id_client = client.id;
+
+create view Named_Price_List as
+select
+	price_list.id,
+	product.name,
+	price_list.price
+from Price_List
+join Product
+on price_list.id_product = product.id;
+
 INSERT INTO public.Product (name, ed) VALUES
 ('Клавиатура механическая', 'шт'),
 ('Мышь оптическая', 'шт'),

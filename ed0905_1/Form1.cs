@@ -82,7 +82,7 @@ namespace ed0905_1
 
 		private void buttonPriceListGrid_Click(object sender, EventArgs e)
 		{
-			adapter = new PriceListDataAdapter();
+			adapter = new NamedPriceListDataAdapter();
 			UpdateData();
 		}
 

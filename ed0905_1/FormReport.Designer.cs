@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.clientsBox = new System.Windows.Forms.ComboBox();
@@ -74,14 +74,14 @@
             // 
             // dateTimeBorder
             // 
-            this.dateTimeBorder.Location = new System.Drawing.Point(414, 7);
+            this.dateTimeBorder.Location = new System.Drawing.Point(414, 6);
             this.dateTimeBorder.Name = "dateTimeBorder";
             this.dateTimeBorder.Size = new System.Drawing.Size(165, 20);
             this.dateTimeBorder.TabIndex = 3;
             // 
             // buttonFetch
             // 
-            this.buttonFetch.Location = new System.Drawing.Point(752, 4);
+            this.buttonFetch.Location = new System.Drawing.Point(751, 4);
             this.buttonFetch.Name = "buttonFetch";
             this.buttonFetch.Size = new System.Drawing.Size(197, 23);
             this.buttonFetch.TabIndex = 4;
@@ -122,22 +122,22 @@
             // 
             // reportChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.reportChart.ChartAreas.Add(chartArea3);
+            chartArea5.Name = "ChartArea1";
+            this.reportChart.ChartAreas.Add(chartArea5);
             this.reportChart.Location = new System.Drawing.Point(414, 3);
             this.reportChart.Name = "reportChart";
-            series3.ChartArea = "ChartArea1";
-            series3.IsValueShownAsLabel = true;
-            series3.Name = "Суммы недоставленных заказов";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            this.reportChart.Series.Add(series3);
+            series5.ChartArea = "ChartArea1";
+            series5.IsValueShownAsLabel = true;
+            series5.Name = "Суммы недоставленных заказов";
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            this.reportChart.Series.Add(series5);
             this.reportChart.Size = new System.Drawing.Size(535, 429);
             this.reportChart.TabIndex = 1;
             this.reportChart.Text = "Суммы недоставленных заказов";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            title3.Name = "Title1";
-            title3.Text = "Суммы недоставленных заказов";
-            this.reportChart.Titles.Add(title3);
+            title5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            title5.Name = "Title1";
+            title5.Text = "Суммы недоставленных заказов";
+            this.reportChart.Titles.Add(title5);
             // 
             // FormReport
             // 
@@ -147,7 +147,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "FormReport";
-            this.Text = "FormReport";
+            this.Text = "Отчёт";
             this.Load += new System.EventHandler(this.FormReport_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
