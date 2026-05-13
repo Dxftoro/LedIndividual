@@ -16,14 +16,14 @@ namespace ed0905_1
     {
         private NpgsqlConnection connection;
         private List<NamedPrice> prices;
-        private List<NamedOrder> orders;
+        private int idOrder;
         private OrderInfo orderInfo;
 
-        public FormOrderInfo(NpgsqlConnection connection, OrderInfo orderInfo)
+        public FormOrderInfo(NpgsqlConnection connection, OrderInfo orderInfo, int idOrder)
         {   
             this.connection = connection;
             this.prices = new List<NamedPrice>();
-            this.orders = new List<NamedOrder>();
+            this.idOrder = idOrder;
             this.orderInfo = orderInfo;
 
             LoadFuturas();
@@ -46,28 +46,12 @@ namespace ed0905_1
 
         private void LoadFuturas()
         {
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT id, fio, order_date FROM Named_Order", connection);
-            System.Data.DataSet dataSet = new System.Data.DataSet();
-            adapter.Fill(dataSet);
-
-            System.Data.DataTable dataTable = dataSet.Tables[0];
-            foreach (DataRow row in dataTable.Rows)
-            {
-                orders.Add(new NamedOrder(row));
-            }
         }
 
         private NamedPrice GetSelectedPrice()
         {
             int index = priceBox.SelectedIndex;
             if (index >= 0) return prices[index];
-            return null;
-        }
-
-        private NamedOrder GetSelectedOrder()
-        {
-            int index = orderBox.SelectedIndex;
-            if (index >= 0) return orders[index];
             return null;
         }
 
@@ -82,34 +66,25 @@ namespace ed0905_1
                 }
             }
 
-            foreach (NamedOrder futura in orders)
-            {
-                orderBox.Items.Add(futura);
-                if (orderInfo != null && futura.Id == orderInfo.IdOrder)
-                {
-                    orderBox.SelectedIndex = orderBox.Items.Count - 1;
-                }
-            }
-
             if (orderInfo == null) return;
             countBox.Value = orderInfo.Quantity;
         }
 
-        private void InsertFuturaInfo(NamedPrice price, NamedOrder order)
+        private void InsertFuturaInfo(NamedPrice price)
         {
             NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_Info (id_price, id_order, quantity) VALUES (:id_price, :id_order, :quantity)", connection);
             command.Parameters.AddWithValue("id_price", price.Id);
-            command.Parameters.AddWithValue("id_order", order.Id);
+            command.Parameters.AddWithValue("id_order", idOrder);
             command.Parameters.AddWithValue("quantity", countBox.Value);
             command.ExecuteNonQuery();
         }
 
-        private void UpdateFuturaInfo(NamedPrice price, NamedOrder order)
+        private void UpdateFuturaInfo(NamedPrice price)
         {
             NpgsqlCommand command = new NpgsqlCommand("UPDATE Order_Info SET id_price = :id_price, id_order = :id_order, quantity = :quantity WHERE id = :id", connection);
             command.Parameters.AddWithValue("id", orderInfo.Id);
             command.Parameters.AddWithValue("id_price", price.Id);
-            command.Parameters.AddWithValue("id_order", order.Id);
+            command.Parameters.AddWithValue("id_order", idOrder);
             command.Parameters.AddWithValue("quantity", countBox.Value);
             command.ExecuteNonQuery();
         }
@@ -117,12 +92,11 @@ namespace ed0905_1
         private void buttonOk_Click(object sender, EventArgs e)
         {
             NamedPrice price = GetSelectedPrice();
-            NamedOrder order = GetSelectedOrder();
 
             try
             {
-                if (orderInfo == null) InsertFuturaInfo(price, order);
-                else UpdateFuturaInfo(price, order);
+                if (orderInfo == null) InsertFuturaInfo(price);
+                else UpdateFuturaInfo(price);
             }
             catch (Exception exc)
             {

@@ -23,7 +23,7 @@ namespace ed0905_1
 
 		public abstract void Setup(NpgsqlConnection connection, DataGridView view);
 
-		public string GetTableName() { return tableName; }
+        public string GetTableName() { return tableName; }
 		public System.Data.DataTable GetDataTable() { return dataTable; }
 
 		protected NpgsqlDataAdapter FillBy(string query, NpgsqlConnection connection)
@@ -170,14 +170,15 @@ namespace ed0905_1
 
 		public override Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row)
 		{
-			if (row == null) return new FormOrderInfo(connection, null);
+			if (row == null) return new FormOrderInfo(connection, null, 0);
 
 			DataRowView rowView = row.DataBoundItem as DataRowView;
 			OrderInfo orderInfo = new OrderInfo(rowView.Row);
 
-			return new FormOrderInfo(connection, orderInfo);
+			return new FormOrderInfo(connection, orderInfo, 0);
 		}
 	}
+
 	public class PriceListDataAdapter : TableDataAdapter
 	{
 		public PriceListDataAdapter() : base("Price_List")
@@ -273,23 +274,33 @@ namespace ed0905_1
 
     public class NamedOrderInfoDataAdapter : TableDataAdapter
     {
+		public int IdFilter { get; set; }
+
         public NamedOrderInfoDataAdapter() : base("Named_Order_Info")
         {
+        }
+
+        public void Setup(NpgsqlConnection connection, DataGridView view, int idFilter)
+		{
+			this.IdFilter = idFilter;
+            NpgsqlDataAdapter adapter = FillBy($"SELECT * FROM {tableName} WHERE id_order = {this.IdFilter}", connection);
+            OnSetup(adapter, connection, view);
         }
 
         public override void OnSetup(NpgsqlDataAdapter adapter, NpgsqlConnection connection, DataGridView view)
         {
             view.DataSource = dataTable;
             view.Columns[0].HeaderText = "ID";
-            view.Columns[1].HeaderText = "Название";
-            view.Columns[2].HeaderText = "Цена";
-            view.Columns[3].HeaderText = "Количество";
-            view.Columns[4].HeaderText = "Заказчик";
+			view.Columns[1].HeaderText = "ID заказа";
+            view.Columns[2].HeaderText = "Название";
+            view.Columns[3].HeaderText = "Цена";
+            view.Columns[4].HeaderText = "Количество";
+            view.Columns[5].HeaderText = "Заказчик";
         }
 
         public override Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row)
         {
-            if (row == null) return new FormOrderInfo(connection, null);
+            if (row == null) return new FormOrderInfo(connection, null, IdFilter);
 
             DataRowView rowView = row.DataBoundItem as DataRowView;
             int orderInfoId = Convert.ToInt32(rowView.Row.ItemArray[0]);
@@ -302,7 +313,7 @@ namespace ed0905_1
             adapter.Fill(table);
 
             OrderInfo orderInfo = new OrderInfo(table.Rows[0]);
-            return new FormOrderInfo(connection, orderInfo);
+            return new FormOrderInfo(connection, orderInfo, IdFilter);
         }
     }
 

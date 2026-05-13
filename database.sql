@@ -145,6 +145,7 @@ on order_1.id_client = client.id;
 create view Named_Order_Info as
 select
 	info.id,
+	ord.id as id_order,
 	prod.name,
 	plist.price,
 	info.quantity,

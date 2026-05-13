@@ -17,20 +17,42 @@ namespace ed0905_1
 		private NpgsqlConnection connection;
 		private List<Client> clients;
 		private Order order;
+        private NamedOrderInfoDataAdapter adapter;
 
-		public FormOrder(NpgsqlConnection connection, Order order)
+        public FormOrder(NpgsqlConnection connection, Order order)
 		{
 			this.connection = connection;
 			this.clients = new List<Client>();
 			this.order = order;
+			this.adapter = new NamedOrderInfoDataAdapter();
 
 			LoadClients();
 			InitializeComponent();
 
 			dateTimeDelivr.Enabled = deliveredCheckBox.Checked;
+            if (order != null)
+            {
+                SetOrderInfoPanelVisible(true);
+                UpdateData();
+            }
+            else
+            {
+                SetOrderInfoPanelVisible(false);
+            }
+        }
+
+		public void SetOrderInfoPanelVisible(bool visible)
+		{
+			orderInfoPanel.Visible = visible;
+            orderInfoPanel.Enabled = visible;
 		}
 
-		private void LoadClients()
+        private void UpdateData()
+        {
+            adapter.Setup(connection, orderInfoGrid, order.Id);
+        }
+
+        private void LoadClients()
 		{
 			NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Client", connection);
 			System.Data.DataSet dataSet = new System.Data.DataSet();
@@ -127,6 +149,45 @@ namespace ed0905_1
         {
             CheckBox checkBox = sender as CheckBox;
 			dateTimeDelivr.Enabled = deliveredCheckBox.Checked;
+        }
+
+        private void insertButton_Click(object sender, EventArgs e)
+        {
+            Form additionForm = adapter.CreateInstanceForm(connection, null);
+            DialogResult result = additionForm.ShowDialog();
+            if (result == DialogResult.OK) UpdateData();
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            Form additionForm = adapter.CreateInstanceForm(connection,
+                orderInfoGrid.SelectedRows.Count > 0 ? orderInfoGrid.SelectedRows[0] : null);
+            DialogResult result = additionForm.ShowDialog();
+            if (result == DialogResult.OK) UpdateData();
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (DataGridViewRow row in orderInfoGrid.SelectedRows)
+                {
+                    DataRowView rowView = row.DataBoundItem as DataRowView;
+                    adapter.DeleteByDataRow(connection, rowView.Row);
+                }
+                UpdateData();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void orderInfoGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            updateButton.Enabled = orderInfoGrid.SelectedRows.Count == 1;
+            deleteButton.Enabled = orderInfoGrid.SelectedRows.Count > 0;
         }
     }
 }

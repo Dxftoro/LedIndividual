@@ -37,6 +37,13 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.deliveredCheckBox = new System.Windows.Forms.CheckBox();
+            this.orderInfoGrid = new System.Windows.Forms.DataGridView();
+            this.insertButton = new System.Windows.Forms.Button();
+            this.updateButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.orderInfoPanel = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.orderInfoGrid)).BeginInit();
+            this.orderInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -67,7 +74,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(217, 47);
+            this.label3.Location = new System.Drawing.Point(261, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 3;
@@ -78,13 +85,13 @@
             this.clientsBox.FormattingEnabled = true;
             this.clientsBox.Location = new System.Drawing.Point(61, 12);
             this.clientsBox.Name = "clientsBox";
-            this.clientsBox.Size = new System.Drawing.Size(357, 21);
+            this.clientsBox.Size = new System.Drawing.Size(401, 21);
             this.clientsBox.TabIndex = 5;
             // 
             // dateTimeDelivr
             // 
             this.dateTimeDelivr.Enabled = false;
-            this.dateTimeDelivr.Location = new System.Drawing.Point(220, 63);
+            this.dateTimeDelivr.Location = new System.Drawing.Point(264, 63);
             this.dateTimeDelivr.Name = "dateTimeDelivr";
             this.dateTimeDelivr.Size = new System.Drawing.Size(198, 20);
             this.dateTimeDelivr.TabIndex = 6;
@@ -92,7 +99,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(262, 99);
+            this.buttonCancel.Location = new System.Drawing.Point(306, 98);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 11;
@@ -102,7 +109,7 @@
             // buttonOk
             // 
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(343, 99);
+            this.buttonOk.Location = new System.Drawing.Point(387, 98);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 10;
@@ -114,7 +121,7 @@
             // 
             this.deliveredCheckBox.AutoSize = true;
             this.deliveredCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.deliveredCheckBox.Location = new System.Drawing.Point(330, 47);
+            this.deliveredCheckBox.Location = new System.Drawing.Point(374, 47);
             this.deliveredCheckBox.Name = "deliveredCheckBox";
             this.deliveredCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.deliveredCheckBox.Size = new System.Drawing.Size(88, 17);
@@ -123,13 +130,69 @@
             this.deliveredCheckBox.UseVisualStyleBackColor = false;
             this.deliveredCheckBox.CheckedChanged += new System.EventHandler(this.deliveredCheckBox_CheckedChanged);
             // 
+            // orderInfoGrid
+            // 
+            this.orderInfoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.orderInfoGrid.Location = new System.Drawing.Point(3, 32);
+            this.orderInfoGrid.Name = "orderInfoGrid";
+            this.orderInfoGrid.Size = new System.Drawing.Size(440, 366);
+            this.orderInfoGrid.TabIndex = 13;
+            this.orderInfoGrid.SelectionChanged += new System.EventHandler(this.orderInfoGrid_SelectionChanged);
+            // 
+            // insertButton
+            // 
+            this.insertButton.Location = new System.Drawing.Point(3, 3);
+            this.insertButton.Name = "insertButton";
+            this.insertButton.Size = new System.Drawing.Size(116, 23);
+            this.insertButton.TabIndex = 16;
+            this.insertButton.Text = "Добавить";
+            this.insertButton.UseVisualStyleBackColor = true;
+            this.insertButton.Click += new System.EventHandler(this.insertButton_Click);
+            // 
+            // updateButton
+            // 
+            this.updateButton.Enabled = false;
+            this.updateButton.Location = new System.Drawing.Point(125, 3);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(116, 23);
+            this.updateButton.TabIndex = 15;
+            this.updateButton.Text = "Изменить";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Enabled = false;
+            this.deleteButton.ForeColor = System.Drawing.Color.Red;
+            this.deleteButton.Location = new System.Drawing.Point(247, 3);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(116, 23);
+            this.deleteButton.TabIndex = 14;
+            this.deleteButton.Text = "Удалить";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // orderInfoPanel
+            // 
+            this.orderInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.orderInfoPanel.Controls.Add(this.insertButton);
+            this.orderInfoPanel.Controls.Add(this.orderInfoGrid);
+            this.orderInfoPanel.Controls.Add(this.updateButton);
+            this.orderInfoPanel.Controls.Add(this.deleteButton);
+            this.orderInfoPanel.Location = new System.Drawing.Point(12, 127);
+            this.orderInfoPanel.Name = "orderInfoPanel";
+            this.orderInfoPanel.Size = new System.Drawing.Size(450, 405);
+            this.orderInfoPanel.TabIndex = 17;
+            this.orderInfoPanel.Visible = false;
+            // 
             // FormOrder
             // 
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(430, 131);
+            this.ClientSize = new System.Drawing.Size(474, 544);
+            this.Controls.Add(this.orderInfoPanel);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.dateTimeDelivr);
@@ -142,6 +205,8 @@
             this.Name = "FormOrder";
             this.Text = "Заказ";
             this.Load += new System.EventHandler(this.FormOrder_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.orderInfoGrid)).EndInit();
+            this.orderInfoPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,5 +223,10 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.CheckBox deliveredCheckBox;
+        private System.Windows.Forms.DataGridView orderInfoGrid;
+        private System.Windows.Forms.Button insertButton;
+        private System.Windows.Forms.Button updateButton;
+        private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.Panel orderInfoPanel;
     }
 }
