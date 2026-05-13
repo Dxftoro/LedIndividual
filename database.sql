@@ -133,8 +133,8 @@ select
 	info.id,
 	prod.name,
 	plist.price,
-	client.fio,
-	info.quantity
+	info.quantity,
+	client.fio
 from Order_Info as info
 left join Price_List as plist
 on info.id_price = plist.id

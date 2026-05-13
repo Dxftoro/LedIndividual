@@ -238,7 +238,42 @@ namespace ed0905_1
 
     public class NamedOrderDataAdapter : TableDataAdapter
     {
-        public NamedPriceListDataAdapter() : base("Named_Price_List")
+        public NamedOrderDataAdapter() : base("Named_Order")
+        {
+        }
+
+        public override void OnSetup(NpgsqlDataAdapter adapter, NpgsqlConnection connection, DataGridView view)
+        {
+            view.DataSource = dataTable;
+            view.Columns[0].HeaderText = "ID";
+            view.Columns[1].HeaderText = "Заказчик";
+            view.Columns[2].HeaderText = "Дата оформления";
+            view.Columns[3].HeaderText = "Дата доставки";
+            view.Columns[4].HeaderText = "Сумма";
+        }
+
+        public override Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row)
+        {
+            if (row == null) return new FormOrder(connection, null);
+
+            DataRowView rowView = row.DataBoundItem as DataRowView;
+            int orderId = Convert.ToInt32(rowView.Row.ItemArray[0]);
+
+            NpgsqlCommand command = new NpgsqlCommand("select * from Order_1 where id = :id", connection);
+            command.Parameters.AddWithValue(":id", orderId);
+
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            Order order = new Order(table.Rows[0]);
+            return new FormOrder(connection, order);
+        }
+    }
+
+    public class NamedOrderInfoDataAdapter : TableDataAdapter
+    {
+        public NamedOrderInfoDataAdapter() : base("Named_Order_Info")
         {
         }
 
@@ -248,27 +283,28 @@ namespace ed0905_1
             view.Columns[0].HeaderText = "ID";
             view.Columns[1].HeaderText = "Название";
             view.Columns[2].HeaderText = "Цена";
+            view.Columns[3].HeaderText = "Количество";
+            view.Columns[4].HeaderText = "Заказчик";
         }
 
         public override Form CreateInstanceForm(NpgsqlConnection connection, DataGridViewRow row)
         {
-            if (row == null) return new FormPrice(connection, null);
+            if (row == null) return new FormOrderInfo(connection, null);
 
             DataRowView rowView = row.DataBoundItem as DataRowView;
-            int priceId = Convert.ToInt32(rowView.Row.ItemArray[0]);
+            int orderInfoId = Convert.ToInt32(rowView.Row.ItemArray[0]);
 
-            NpgsqlCommand command = new NpgsqlCommand("select * from Price_List where id = :id", connection);
-            command.Parameters.AddWithValue(":id", priceId);
+            NpgsqlCommand command = new NpgsqlCommand("select * from Order_Info where id = :id", connection);
+            command.Parameters.AddWithValue(":id", orderInfoId);
 
             NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command);
             DataTable table = new DataTable();
             adapter.Fill(table);
 
-            Price price = new Price(table.Rows[0]);
-            return new FormPrice(connection, price);
+            OrderInfo orderInfo = new OrderInfo(table.Rows[0]);
+            return new FormOrderInfo(connection, orderInfo);
         }
     }
-
 
     public class PriceListExportView : BaseDataAdapter
 	{

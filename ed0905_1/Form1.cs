@@ -70,13 +70,13 @@ namespace ed0905_1
 
 		private void orderGridButton_Click(object sender, EventArgs e)
 		{
-			adapter = new OrderDataAdapter();
+			adapter = new NamedOrderDataAdapter();
 			UpdateData();
 		}
 
 		private void orderDataGridButton_Click(object sender, EventArgs e)
 		{
-			adapter = new OrderInfoDataAdapter();
+			adapter = new NamedOrderInfoDataAdapter();
 			UpdateData();
 		}
 
