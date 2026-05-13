@@ -18,6 +18,7 @@ namespace ed0905_1
 		private List<Client> clients;
 		private Order order;
         private NamedOrderInfoDataAdapter adapter;
+        private bool orderChanged, initializing;
 
         public FormOrder(NpgsqlConnection connection, Order order)
 		{
@@ -25,11 +26,15 @@ namespace ed0905_1
 			this.clients = new List<Client>();
 			this.order = order;
 			this.adapter = new NamedOrderInfoDataAdapter();
+            this.orderChanged = false;
+            this.initializing = false;
 
-			LoadClients();
 			InitializeComponent();
 
-			dateTimeDelivr.Enabled = deliveredCheckBox.Checked;
+            SetOrderChanged(false);
+            LoadClients();
+
+            dateTimeDelivr.Enabled = deliveredCheckBox.Checked;
             if (order != null)
             {
                 SetOrderInfoPanelVisible(true);
@@ -46,6 +51,14 @@ namespace ed0905_1
 			orderInfoPanel.Visible = visible;
             orderInfoPanel.Enabled = visible;
 		}
+
+        public void SetOrderChanged(bool changed)
+        {
+            if (initializing == true) return;
+            orderChanged = changed;
+            buttonOk.Enabled = changed;
+            MessageBox.Show($"CHANGED: {changed}");
+        }
 
         private void UpdateData()
         {
@@ -77,6 +90,8 @@ namespace ed0905_1
 
 		private void FormOrder_Load(object sender, EventArgs e)
 		{
+            initializing = true;
+
             foreach (Client client in clients)
             {
                 clientsBox.Items.Add(client);
@@ -90,6 +105,9 @@ namespace ed0905_1
             dateTimeOrder.Value = order.OrderDate;
 			dateTimeDelivr.Value = order.DeliveryDate ?? dateTimeDelivr.MinDate;
 			deliveredCheckBox.Checked = order.DeliveryDate.HasValue;
+
+            initializing = false;
+            SetOrderChanged(false);
         }
 
         private void InsertOrder(Client client)
@@ -131,24 +149,47 @@ namespace ed0905_1
 
 		private void buttonOk_Click(object sender, EventArgs e)
 		{
+            if (!orderChanged) return;
 			Client client = GetSelectedClient();
 
 			try
 			{
 				if (order == null) InsertOrder(client);
 				else UpdateOrder(client);
-			}
-			catch (Exception exc)
+                SetOrderInfoPanelVisible(true);
+                SetOrderChanged(false);
+            }
+            catch (Exception exc)
 			{
 				MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-			Close();
 		}
 
         private void deliveredCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
 			dateTimeDelivr.Enabled = deliveredCheckBox.Checked;
+
+            SetOrderChanged(true);
+        }
+
+        private void dateTimeDelivr_ValueChanged(object sender, EventArgs e)
+        {
+            SetOrderChanged(true);
+        }
+
+        private void dateTimeOrder_ValueChanged(object sender, EventArgs e)
+        {
+            SetOrderChanged(true);
+        }
+
+        private void clientsBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            SetOrderChanged(true);
+        }
+
+        private void clientsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
 
         private void insertButton_Click(object sender, EventArgs e)
@@ -188,6 +229,15 @@ namespace ed0905_1
         {
             updateButton.Enabled = orderInfoGrid.SelectedRows.Count == 1;
             deleteButton.Enabled = orderInfoGrid.SelectedRows.Count > 0;
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            base.OnFormClosing(e);
         }
     }
 }

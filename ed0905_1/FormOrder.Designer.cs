@@ -34,7 +34,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.clientsBox = new System.Windows.Forms.ComboBox();
             this.dateTimeDelivr = new System.Windows.Forms.DateTimePicker();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.deliveredCheckBox = new System.Windows.Forms.CheckBox();
             this.orderInfoGrid = new System.Windows.Forms.DataGridView();
@@ -61,6 +60,7 @@
             this.dateTimeOrder.Name = "dateTimeOrder";
             this.dateTimeOrder.Size = new System.Drawing.Size(198, 20);
             this.dateTimeOrder.TabIndex = 1;
+            this.dateTimeOrder.ValueChanged += new System.EventHandler(this.dateTimeOrder_ValueChanged);
             // 
             // label2
             // 
@@ -87,6 +87,8 @@
             this.clientsBox.Name = "clientsBox";
             this.clientsBox.Size = new System.Drawing.Size(401, 21);
             this.clientsBox.TabIndex = 5;
+            this.clientsBox.SelectedIndexChanged += new System.EventHandler(this.clientsBox_SelectedIndexChanged);
+            this.clientsBox.SelectionChangeCommitted += new System.EventHandler(this.clientsBox_SelectionChangeCommitted);
             // 
             // dateTimeDelivr
             // 
@@ -95,20 +97,10 @@
             this.dateTimeDelivr.Name = "dateTimeDelivr";
             this.dateTimeDelivr.Size = new System.Drawing.Size(198, 20);
             this.dateTimeDelivr.TabIndex = 6;
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(306, 98);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 11;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.dateTimeDelivr.ValueChanged += new System.EventHandler(this.dateTimeDelivr_ValueChanged);
             // 
             // buttonOk
             // 
-            this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOk.Location = new System.Drawing.Point(387, 98);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
@@ -190,10 +182,8 @@
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(474, 544);
             this.Controls.Add(this.orderInfoPanel);
-            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.dateTimeDelivr);
             this.Controls.Add(this.clientsBox);
@@ -220,7 +210,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox clientsBox;
         private System.Windows.Forms.DateTimePicker dateTimeDelivr;
-        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.CheckBox deliveredCheckBox;
         private System.Windows.Forms.DataGridView orderInfoGrid;
