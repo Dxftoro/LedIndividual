@@ -70,6 +70,17 @@ CREATE OR REPLACE FUNCTION insert_order_info() RETURNS TRIGGER AS $ad_oi_trigger
 	END
 $ad_oi_trigger$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION update_order_info() RETURNS TRIGGER AS $up_oi_trigger$
+	BEGIN
+		UPDATE Order_1
+		SET total_sum = total_sum + (NEW.quantity - OLD.quantity) * (
+			SELECT price FROM Price_List WHERE ID = NEW.id_price
+		)
+		WHERE Order_1.id = NEW.id_order;
+		RETURN NULL;
+	END
+$up_oi_trigger$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION delete_order_info() RETURNS TRIGGER AS $del_oi_trigger$
 	BEGIN
 		UPDATE Order_1
@@ -83,6 +94,9 @@ $del_oi_trigger$ LANGUAGE plpgsql;
 
 CREATE TRIGGER ins_order_info AFTER INSERT ON Order_Info
 	FOR EACH ROW EXECUTE PROCEDURE insert_order_info();
+
+CREATE TRIGGER upd_order_info AFTER UPDATE ON Order_Info
+	FOR EACH ROW EXECUTE PROCEDURE update_order_info();
 
 CREATE TRIGGER del_order_info AFTER DELETE ON Order_Info
 	FOR EACH ROW EXECUTE PROCEDURE delete_order_info();
@@ -145,6 +159,7 @@ on info.id_order = ord.id
 left join Client
 on ord.id_client = client.id;
 
+-- Named price list table view
 create view Named_Price_List as
 select
 	price_list.id,

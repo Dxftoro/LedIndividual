@@ -57,7 +57,7 @@ namespace ed0905_1
 
         public override string ToString()
         {
-            return $"{Id}: Product ID = {IdProduct}, Price = {Value}";
+            return $"{Id}: ID товара = {IdProduct}, цена = {Value}";
         }
     }
 
@@ -114,7 +114,7 @@ namespace ed0905_1
         {
             string delivery = DeliveryDate.HasValue 
                 ? DeliveryDate.Value.ToShortDateString() : "Not delivered";
-            return $"{Id}: Client ID = {IdClient}, Order Date = {OrderDate.ToShortDateString()}, Delivery = {delivery}, Total = {TotalSum}";
+            return $"{Id}: ID клиента = {IdClient}, дата оформ. = {OrderDate.ToShortDateString()}, дата дост. = {delivery}, сумма = {TotalSum}";
         }
     }
 
@@ -136,7 +136,7 @@ namespace ed0905_1
 
         public override string ToString()
         {
-            return $"{Id}: Order ID = {IdOrder}, Price ID = {IdPrice}, Quantity = {Quantity}";
+            return $"{Id}: ID заказа = {IdOrder}, ID цены = {IdPrice}, кол-во = {Quantity}";
         }
     }
 }

@@ -15,15 +15,15 @@ namespace ed0905_1
     public partial class FormOrderInfo : Form
     {
         private NpgsqlConnection connection;
-        private List<Price> prices;
-        private List<Order> orders;
+        private List<NamedPrice> prices;
+        private List<NamedOrder> orders;
         private OrderInfo orderInfo;
 
         public FormOrderInfo(NpgsqlConnection connection, OrderInfo orderInfo)
         {   
             this.connection = connection;
-            this.prices = new List<Price>();
-            this.orders = new List<Order>();
+            this.prices = new List<NamedPrice>();
+            this.orders = new List<NamedOrder>();
             this.orderInfo = orderInfo;
 
             LoadFuturas();
@@ -33,38 +33,38 @@ namespace ed0905_1
 
         private void LoadPrices()
         {
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Price_List", connection);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Named_Price_List", connection);
             System.Data.DataSet dataSet = new System.Data.DataSet();
             adapter.Fill(dataSet);
 
             System.Data.DataTable dataTable = dataSet.Tables[0];
             foreach (DataRow row in dataTable.Rows)
             {
-                prices.Add(new Price(row));
+                prices.Add(new NamedPrice(row));
             }
         }
 
         private void LoadFuturas()
         {
-            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT * FROM Order_1", connection);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT id, fio, order_date FROM Named_Order", connection);
             System.Data.DataSet dataSet = new System.Data.DataSet();
             adapter.Fill(dataSet);
 
             System.Data.DataTable dataTable = dataSet.Tables[0];
             foreach (DataRow row in dataTable.Rows)
             {
-                orders.Add(new Order(row));
+                orders.Add(new NamedOrder(row));
             }
         }
 
-        private Price GetSelectedPrice()
+        private NamedPrice GetSelectedPrice()
         {
             int index = priceBox.SelectedIndex;
             if (index >= 0) return prices[index];
             return null;
         }
 
-        private Order GetSelectedOrder()
+        private NamedOrder GetSelectedOrder()
         {
             int index = orderBox.SelectedIndex;
             if (index >= 0) return orders[index];
@@ -73,7 +73,7 @@ namespace ed0905_1
 
         private void FormOrderInfo_Load(object sender, EventArgs e)
         {
-            foreach (Price product in prices)
+            foreach (NamedPrice product in prices)
             {
                 priceBox.Items.Add(product);
                 if (orderInfo != null && product.Id == orderInfo.IdPrice)
@@ -82,7 +82,7 @@ namespace ed0905_1
                 }
             }
 
-            foreach (Order futura in orders)
+            foreach (NamedOrder futura in orders)
             {
                 orderBox.Items.Add(futura);
                 if (orderInfo != null && futura.Id == orderInfo.IdOrder)
@@ -95,7 +95,7 @@ namespace ed0905_1
             countBox.Value = orderInfo.Quantity;
         }
 
-        private void InsertFuturaInfo(Price price, Order order)
+        private void InsertFuturaInfo(NamedPrice price, NamedOrder order)
         {
             NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_Info (id_price, id_order, quantity) VALUES (:id_price, :id_order, :quantity)", connection);
             command.Parameters.AddWithValue("id_price", price.Id);
@@ -104,7 +104,7 @@ namespace ed0905_1
             command.ExecuteNonQuery();
         }
 
-        private void UpdateFuturaInfo(Price price, Order order)
+        private void UpdateFuturaInfo(NamedPrice price, NamedOrder order)
         {
             NpgsqlCommand command = new NpgsqlCommand("UPDATE Order_Info SET id_price = :id_price, id_order = :id_order, quantity = :quantity WHERE id = :id", connection);
             command.Parameters.AddWithValue("id", orderInfo.Id);
@@ -116,8 +116,8 @@ namespace ed0905_1
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            Price price = GetSelectedPrice();
-            Order order = GetSelectedOrder();
+            NamedPrice price = GetSelectedPrice();
+            NamedOrder order = GetSelectedOrder();
 
             try
             {

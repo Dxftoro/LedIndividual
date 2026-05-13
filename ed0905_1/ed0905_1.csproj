@@ -139,6 +139,7 @@
       <DependentUpon>FormReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Instances.cs" />
+    <Compile Include="NamedInstances.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
