@@ -94,14 +94,14 @@ namespace ed0905_1
             this.IdClient = idClient;
             this.OrderDate = DateTime.Parse(orderDate);
             this.DeliveryDate = deliveryDate != null 
-                ? DateTime.Parse(deliveryDate) : DateTime.MinValue;
+                ? DateTime.Parse(deliveryDate) : DateTime.Now;
         }
         public Order(int idClient, DateTime orderDate, DateTime? deliveryDate)
         {
             this.IdClient = idClient;
             this.OrderDate = orderDate;
             this.DeliveryDate = deliveryDate != null
-                ? deliveryDate : DateTime.MinValue;
+                ? deliveryDate : DateTime.Now;
         }
 
         public Order(DataRow row)

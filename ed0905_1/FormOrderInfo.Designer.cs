@@ -71,9 +71,19 @@
             2,
             0,
             0});
+            this.countBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.countBox.Name = "countBox";
             this.countBox.Size = new System.Drawing.Size(329, 20);
             this.countBox.TabIndex = 11;
+            this.countBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonCancel
             // 

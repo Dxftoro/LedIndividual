@@ -111,6 +111,14 @@ namespace ed0905_1
             SetOrderChanged(false);
         }
 
+        private void ValidateOrder()
+        {
+            if (dateTimeDelivr.Checked && dateTimeOrder.Value > dateTimeDelivr.Value)
+            {
+                throw new Exception("Дата доставки не должна быть раньше даты заказа!");
+            }
+        }
+
         private void InsertOrder(Client client)
 		{
 			NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_1 (id_client, order_date, delivery_date) VALUES (:id_client, :order_date, :delivery_date) RETURNING id", connection);
@@ -162,6 +170,7 @@ namespace ed0905_1
 
 			try
 			{
+                ValidateOrder();
 				if (order == null) InsertOrder(client);
 				else UpdateOrder(client);
                 SetOrderInfoPanelVisible(true);
