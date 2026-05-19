@@ -152,6 +152,7 @@ namespace ed0905_1
 		{
             if (!orderChanged) return;
 			Client client = GetSelectedClient();
+            if (client == null) return;
 
 			try
 			{
