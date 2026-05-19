@@ -101,12 +101,13 @@ namespace ed0905_1
                 }
             }
 
+            initializing = false;
+
             if (order == null) return;
             dateTimeOrder.Value = order.OrderDate;
 			dateTimeDelivr.Value = order.DeliveryDate ?? dateTimeDelivr.MinDate;
 			deliveredCheckBox.Checked = order.DeliveryDate.HasValue;
 
-            initializing = false;
             SetOrderChanged(false);
         }
 
@@ -214,7 +215,7 @@ namespace ed0905_1
                 foreach (DataGridViewRow row in orderInfoGrid.SelectedRows)
                 {
                     DataRowView rowView = row.DataBoundItem as DataRowView;
-                    adapter.DeleteByDataRow(connection, rowView.Row);
+                    adapter.DeleteByDataRow(connection, rowView.Row, adapter.ReferencedTable);
                 }
                 UpdateData();
             }

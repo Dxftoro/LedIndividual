@@ -36,7 +36,7 @@ namespace ed0905_1
 
 		private Task Connect()
 		{
-			connection = new NpgsqlConnection("server=26.84.220.160;port=5432;userid=postgres;password=postpass;database=ed0905_1");
+			connection = new NpgsqlConnection("server=26.60.242.39;port=5432;userid=ftorozol;password=1488;database=ed0905_1");
 			
 			try
 			{
@@ -108,7 +108,8 @@ namespace ed0905_1
 				foreach (DataGridViewRow row in dataGridView1.SelectedRows)
 				{
 					DataRowView rowView = row.DataBoundItem as DataRowView;
-					adapter.DeleteByDataRow(connection, rowView.Row);
+					adapter.DeleteByDataRow(connection, rowView.Row,
+						adapter is NamedDataAdapter ? ((NamedDataAdapter)adapter).ReferencedTable : null);
 				}
 				UpdateData();
 			}
