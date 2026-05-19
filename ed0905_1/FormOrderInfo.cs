@@ -72,6 +72,7 @@ namespace ed0905_1
 
         private void InsertFuturaInfo(NamedPrice price)
         {
+            //MessageBox.Show($"id_price: {price.Id}, id_order: {idOrder}");
             NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_Info (id_price, id_order, quantity) VALUES (:id_price, :id_order, :quantity)", connection);
             command.Parameters.AddWithValue("id_price", price.Id);
             command.Parameters.AddWithValue("id_order", idOrder);
@@ -92,6 +93,7 @@ namespace ed0905_1
         private void buttonOk_Click(object sender, EventArgs e)
         {
             NamedPrice price = GetSelectedPrice();
+            if (price == null) return;
 
             try
             {

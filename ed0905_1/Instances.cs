@@ -96,6 +96,13 @@ namespace ed0905_1
             this.DeliveryDate = deliveryDate != null 
                 ? DateTime.Parse(deliveryDate) : DateTime.MinValue;
         }
+        public Order(int idClient, DateTime orderDate, DateTime? deliveryDate)
+        {
+            this.IdClient = idClient;
+            this.OrderDate = orderDate;
+            this.DeliveryDate = deliveryDate != null
+                ? deliveryDate : DateTime.MinValue;
+        }
 
         public Order(DataRow row)
         {

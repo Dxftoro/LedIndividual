@@ -113,20 +113,26 @@ namespace ed0905_1
 
         private void InsertOrder(Client client)
 		{
-			NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_1 (id_client, order_date, delivery_date) VALUES (:id_client, :order_date, :delivery_date)", connection);
+			NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Order_1 (id_client, order_date, delivery_date) VALUES (:id_client, :order_date, :delivery_date) RETURNING id", connection);
 			command.Parameters.AddWithValue("id_client", client.Id);
 			command.Parameters.AddWithValue("order_date", dateTimeOrder.Value);
 
+            DateTime? deliveryDate = null;
             if (deliveredCheckBox.Checked)
             {
                 command.Parameters.AddWithValue("delivery_date", dateTimeDelivr.Value);
+                deliveryDate = dateTimeDelivr.Value;
             }
             else
             {
                 command.Parameters.AddWithValue("delivery_date", DBNull.Value);
             }
 
-            command.ExecuteNonQuery();
+            //MessageBox.Show(deliveryDateStr);
+            int idOrder = Convert.ToInt32(command.ExecuteScalar());
+            order = new Order(client.Id, dateTimeOrder.Value, deliveryDate);
+            order.Id = idOrder;
+            UpdateData();
 		}
 
 		private void UpdateOrder(Client client)
